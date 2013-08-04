@@ -11,10 +11,10 @@ or better yet allow the user to configure which crossings get displayed.
 
 --
 
-To install this app, use the APK file included in the root of the repository (the app is not available in the Google
+Notes:
+
+* To install this app, use the APK file included in the root of the repository (the app is not available in the Google
 play app store).
 
---
-
-This code is licensed under LGPL v3. To see the terms of that license check out the LICENSE file in the root of this
+* This code is licensed under LGPL v3. To see the terms of that license check out the LICENSE file in the root of this
 repository.
