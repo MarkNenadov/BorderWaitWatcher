@@ -15,7 +15,7 @@ public class MyActivity extends Activity {
     public void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.main );
-        refresh(null);
+        refresh( null );
     }
 
     public void refresh( View view ) {
@@ -40,7 +40,7 @@ public class MyActivity extends Activity {
         String americanText = ViewHelpers.getPresentationTextFromBorderLocationsList( americanBorderLocations );
 
         TextView text = (TextView) findViewById( R.id.level1 );
-        text.setText( canadaText ) ;
+        text.setText( "Developed by Mark Nenadov, 2013\n\n" + canadaText ) ;
         TextView text2 = (TextView) findViewById( R.id.level2 );
         text2.setText( americanText ) ;
     }
