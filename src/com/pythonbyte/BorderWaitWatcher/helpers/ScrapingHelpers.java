@@ -1,6 +1,6 @@
 package com.pythonbyte.BorderWaitWatcher.helpers;
 
-import com.pythonbyte.BorderWaitWatcher.BorderLocation;
+import com.pythonbyte.BorderWaitWatcher.domain.BorderLocation;
 import org.horrabin.horrorss.RssFeed;
 import org.horrabin.horrorss.RssParser;
 import org.jsoup.Jsoup;
@@ -8,11 +8,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.net.URL;
 import java.util.List;
 
 public class ScrapingHelpers {
     private static String CANADIAN_GOVERNMENT_BORDER_URL = "http://www.cbsa-asfc.gc.ca/bwt-taf/menu-eng.html";
+    private static String US_GOVERNMENT_BORDER_URL_PREFIX = "http://apps.cbp.gov/bwt/customize_rss.asp?portList=";
+    private static String US_GOVERNMENT_BORDER_URL_SUFFIX = "&lane=pov&action=rss&f=csv";
 
     public static List<BorderLocation> loadWaitTimesIntoBorderLocationsFromCanadianGovernmentUrl(List<BorderLocation> borderLocations) {
         try {
@@ -41,7 +42,7 @@ public class ScrapingHelpers {
 
     public static List<BorderLocation> loadWaitTimesIntoBorderLocationsFromUnitedStatesGovernmentUrl(List<BorderLocation> borderLocations) {
         for ( BorderLocation borderLocation: borderLocations ) {
-            String feedUrl = "http://apps.cbp.gov/bwt/customize_rss.asp?portList=" + borderLocation.getPortId() + "&lane=pov&action=rss&f=csv";
+            String feedUrl = US_GOVERNMENT_BORDER_URL_PREFIX + borderLocation.getPortId() + US_GOVERNMENT_BORDER_URL_SUFFIX;
             String description = "Unknown";
 
             RssParser rss = new RssParser();

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import com.pythonbyte.BorderWaitWatcher.domain.BorderLocation;
+import com.pythonbyte.BorderWaitWatcher.domain.Country;
 import com.pythonbyte.BorderWaitWatcher.helpers.ScrapingHelpers;
 import com.pythonbyte.BorderWaitWatcher.helpers.ViewHelpers;
 

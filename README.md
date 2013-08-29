@@ -15,7 +15,7 @@ or better yet allow the user to configure which crossings get displayed.
 
 Notes:
 
-* To install this app, use the APK file included in the root of the repository (the app is not available in the Google
+* To install this app, use the APK file included in /out/production/BorderWaitWatcher/ (the app is not available in the Google
 play app store).
 
 * This code is licensed under LGPL v3. To see the terms of that license check out the LICENSE file in the root of this
