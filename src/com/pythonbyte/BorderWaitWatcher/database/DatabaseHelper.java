@@ -21,6 +21,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     Context context;
 
     private Dao<BorderLocation, Integer> borderLocationDao = null;
+    private Dao<Country, Integer> countryDao = null;
 
     public DatabaseHelper( Context context ) {
         super( context, DB_NAME, null, DB_VERSION );
@@ -30,13 +31,20 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate( SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource ) {
         try {
-            TableUtils.createTable(connectionSource, BorderLocation.class );
+            TableUtils.createTable( connectionSource, BorderLocation.class );
+            TableUtils.createTable( connectionSource, Country.class );
         } catch ( SQLException e ) {
             Log.e(DatabaseHelper.class.getName(), "Can't create the database", e);
             throw new RuntimeException( e );
         }
 
         try {
+            Country canada = Country.CANADA;
+            Country usa = Country.USA;
+
+            getCountryDao().createOrUpdate( canada );
+            getCountryDao().createOrUpdate( usa );
+
             List<BorderLocation> locations = new ArrayList<BorderLocation>();
             locations.add( new BorderLocation( "Ambassador Bridge", "Windsor/Detroit", Country.CANADA ) );
             locations.add( new BorderLocation( "Detroit and Canada Tunnel", "Windsor/Detroit", Country.CANADA ) );
@@ -85,6 +93,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return borderLocationDao;
     }
 
-
+    public Dao<Country, Integer> getCountryDao() {
+        if ( countryDao == null ) {
+            try {
+                countryDao = getDao( Country.class );
+            } catch ( SQLException e ) {
+                ExceptionHelpers.printStackTrace(e);
+            }
+        }
+        return countryDao;
+    }
 
 }

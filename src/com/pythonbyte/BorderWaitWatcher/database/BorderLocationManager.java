@@ -43,7 +43,7 @@ public class BorderLocationManager {
 
         try {
             QueryMap queryMap = new QueryMap();
-            queryMap.addProperty( "country", country );
+            queryMap.addProperty( "country_id", String.valueOf( country.getId() ) );
 
             borderLocations = getHelper().getBorderLocationDao().queryForFieldValues( queryMap.getProperties() );
         } catch ( SQLException e ) {

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import com.pythonbyte.BorderWaitWatcher.database.BorderLocationManager;
 import com.pythonbyte.BorderWaitWatcher.domain.BorderLocation;
 import com.pythonbyte.BorderWaitWatcher.domain.Country;
 import com.pythonbyte.BorderWaitWatcher.helpers.ScrapingHelpers;
@@ -21,22 +22,15 @@ public class MyActivity extends Activity {
     }
 
     public void refresh( View view ) {
-        List<BorderLocation> canadianBorderLocations = new ArrayList<BorderLocation>();
-        canadianBorderLocations.add( new BorderLocation( "Ambassador Bridge", "Windsor/Detroit", Country.CANADA ) );
-        canadianBorderLocations.add( new BorderLocation( "Detroit and Canada Tunnel", "Windsor/Detroit", Country.CANADA ) );
-        canadianBorderLocations.add( new BorderLocation( "Rainbow Bridge", "Niagara", Country.CANADA ) );
-        canadianBorderLocations.add( new BorderLocation( "Peace Bridge", "Buffalo", Country.CANADA ) );
-        canadianBorderLocations.add( new BorderLocation( "Queenston-Lewiston Bridge", "", Country.CANADA ) );
+        BorderLocationManager.init( this );
+        BorderLocationManager borderLocationManager = BorderLocationManager.getInstance();
 
-        canadianBorderLocations = ScrapingHelpers.loadWaitTimesIntoBorderLocationsFromCanadianGovernmentUrl( canadianBorderLocations);
+        List<BorderLocation> canadianBorderLocations = borderLocationManager.getAllBorderLocationsByCountry( Country.CANADA );
+
+        canadianBorderLocations = ScrapingHelpers.loadWaitTimesIntoBorderLocationsFromCanadianGovernmentUrl( canadianBorderLocations );
         String canadaText = ViewHelpers.getPresentationTextFromBorderLocationsList( canadianBorderLocations );
 
-        List<BorderLocation> americanBorderLocations = new ArrayList<BorderLocation>();
-        americanBorderLocations.add( new BorderLocation( "Ambassador Bridge", "Detroit/Windsor", Country.USA, "380001" ) );
-        americanBorderLocations.add( new BorderLocation( "Windsor Tunnel", "Detroit/Windsor", Country.USA, "380002" ) );
-        americanBorderLocations.add( new BorderLocation( "Rainbow Bridge", "Niagara", Country.USA, "090102" ) );
-        americanBorderLocations.add( new BorderLocation( "Peace Bridge", "Buffalo", Country.USA, "090101" ) );
-        americanBorderLocations.add( new BorderLocation( "Queenston-Lewiston Bridge", "", Country.USA, "090104" ) );
+        List<BorderLocation> americanBorderLocations = borderLocationManager.getAllBorderLocationsByCountry( Country.USA );
 
         americanBorderLocations = ScrapingHelpers.loadWaitTimesIntoBorderLocationsFromUnitedStatesGovernmentUrl( americanBorderLocations );
         String americanText = ViewHelpers.getPresentationTextFromBorderLocationsList( americanBorderLocations );

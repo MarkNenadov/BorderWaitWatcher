@@ -4,7 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 
 public class DomainObject {
     @DatabaseField( generatedId=true )
-    private long id;
+    protected long id;
 
     /* Properties */
     public long getId() {

@@ -12,7 +12,7 @@ public class BorderLocation extends DomainObject {
     @DatabaseField
     private String waitTime = "";
 
-    @DatabaseField
+    @DatabaseField( foreign=true, foreignColumnName="id", foreignAutoRefresh=true )
     private Country country;
 
     @DatabaseField

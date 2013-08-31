@@ -5,7 +5,7 @@ import com.pythonbyte.BorderWaitWatcher.domain.BorderLocation;
 import java.util.List;
 
 public class ViewHelpers {
-    public static String getPresentationTextFromBorderLocationsList(List<BorderLocation> borderLocations) {
+    public static String getPresentationTextFromBorderLocationsList( List<BorderLocation> borderLocations ) {
         String text = "Into " + borderLocations.get( 0 ).getCountry().getName() + ":\n\n";
         for ( BorderLocation borderLocation: borderLocations ) {
             text += borderLocation.getTitle();
