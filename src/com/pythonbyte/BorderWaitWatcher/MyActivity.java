@@ -25,19 +25,23 @@ public class MyActivity extends Activity {
         BorderLocationManager.init( this );
         BorderLocationManager borderLocationManager = BorderLocationManager.getInstance();
 
-        List<BorderLocation> canadianBorderLocations = borderLocationManager.getAllBorderLocationsByCountry( Country.CANADA );
-
-        canadianBorderLocations = ScrapingHelpers.loadWaitTimesIntoBorderLocationsFromCanadianGovernmentUrl( canadianBorderLocations );
-        String canadaText = ViewHelpers.getPresentationTextFromBorderLocationsList( canadianBorderLocations );
-
-        List<BorderLocation> americanBorderLocations = borderLocationManager.getAllBorderLocationsByCountry( Country.USA );
-
-        americanBorderLocations = ScrapingHelpers.loadWaitTimesIntoBorderLocationsFromUnitedStatesGovernmentUrl( americanBorderLocations );
-        String americanText = ViewHelpers.getPresentationTextFromBorderLocationsList( americanBorderLocations );
-
         TextView text = (TextView) findViewById( R.id.level1 );
-        text.setText( "Developed by Mark Nenadov, 2013\n\n" + canadaText ) ;
+        text.setText( "Developed by Mark Nenadov, 2013\n\n" + getCanadianText( borderLocationManager ) ) ;
         TextView text2 = (TextView) findViewById( R.id.level2 );
-        text2.setText( americanText ) ;
+        text2.setText( getAmericanText( borderLocationManager ) ) ;
+    }
+
+
+    private CharSequence getCanadianText( BorderLocationManager borderLocationManager ) {
+        List<BorderLocation> canadianBorderLocations = borderLocationManager.getAllBorderLocationsByCountry( Country.CANADA );
+        canadianBorderLocations = ScrapingHelpers.loadWaitTimesIntoBorderLocationsFromCanadianGovernmentUrl( canadianBorderLocations );
+        return ViewHelpers.getPresentationTextFromBorderLocationsList( canadianBorderLocations );
+
+    }
+
+    private CharSequence getAmericanText(BorderLocationManager borderLocationManager) {
+        List<BorderLocation> americanBorderLocations = borderLocationManager.getAllBorderLocationsByCountry( Country.USA );
+        americanBorderLocations = ScrapingHelpers.loadWaitTimesIntoBorderLocationsFromUnitedStatesGovernmentUrl( americanBorderLocations );
+        return ViewHelpers.getPresentationTextFromBorderLocationsList( americanBorderLocations );
     }
 }

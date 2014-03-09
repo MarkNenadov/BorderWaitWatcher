@@ -19,25 +19,32 @@ public class ScrapingHelpers {
         try {
             Document borderWaitTimePageDocument = Jsoup.connect( CANADIAN_GOVERNMENT_BORDER_URL ).get();
             Element borderWaitTimeTable = borderWaitTimePageDocument.select( "table[class=bwt]" ).first();
-
             Elements borderWaitTimeTableRows = borderWaitTimeTable.select( "tr" );
 
-            for ( BorderLocation borderLocation: borderLocations ) {
-                for ( Element rowElement: borderWaitTimeTableRows ) {
-                    if ( rowElement.select( "td[headers=Office]" ).first() != null ) {
-                        Element officeTdBold = rowElement.select( "td[headers=Office]" ).first().select( "b" ).first();
-
-                        if ( officeTdBold.text().equals( borderLocation.getTitle() ) ) {
-                            borderLocation.setWaitTime( rowElement.select( "td[headers=Trav TravCanada]" ).first().text() );
-                        }
-                    }
-                }
-            }
+            loadBorderLocationsFromWaitTimeTableRows( borderLocations, borderWaitTimeTableRows );
         } catch ( Exception e ) {
             e.printStackTrace();
         }
 
         return borderLocations;
+    }
+
+    private static void loadBorderLocationsFromWaitTimeTableRows(List<BorderLocation> borderLocations, Elements borderWaitTimeTableRows) {
+        for ( BorderLocation borderLocation: borderLocations ) {
+            loadBorderLocationFromWaitTimeTableRows( borderLocation, borderWaitTimeTableRows );
+        }
+    }
+
+    private static void loadBorderLocationFromWaitTimeTableRows(BorderLocation borderLocation, Elements borderWaitTimeTableRows) {
+        for ( Element rowElement: borderWaitTimeTableRows ) {
+            if ( rowElement.select( "td[headers=Office]" ).first() != null ) {
+                Element officeTdBold = rowElement.select( "td[headers=Office]" ).first().select( "b" ).first();
+
+                if ( officeTdBold.text().equals( borderLocation.getTitle() ) ) {
+                    borderLocation.setWaitTime( rowElement.select( "td[headers=Trav TravCanada]" ).first().text() );
+                }
+            }
+        }
     }
 
     public static List<BorderLocation> loadWaitTimesIntoBorderLocationsFromUnitedStatesGovernmentUrl(List<BorderLocation> borderLocations) {
