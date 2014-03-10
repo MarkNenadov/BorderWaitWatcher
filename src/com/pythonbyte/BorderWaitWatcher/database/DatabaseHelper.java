@@ -31,37 +31,53 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate( SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource ) {
         try {
-            TableUtils.createTable( connectionSource, BorderLocation.class );
-            TableUtils.createTable( connectionSource, Country.class );
+            createDatabaseTables();
         } catch ( SQLException e ) {
             Log.e(DatabaseHelper.class.getName(), "Can't create the database", e);
             throw new RuntimeException( e );
         }
 
         try {
-            Country canada = Country.CANADA;
-            Country usa = Country.USA;
-
-            getCountryDao().createOrUpdate( canada );
-            getCountryDao().createOrUpdate( usa );
-
-            List<BorderLocation> locations = new ArrayList<BorderLocation>();
-            locations.add( new BorderLocation( "Ambassador Bridge", "Windsor/Detroit", Country.CANADA ) );
-            locations.add( new BorderLocation( "Detroit and Canada Tunnel", "Windsor/Detroit", Country.CANADA ) );
-            locations.add( new BorderLocation( "Rainbow Bridge", "Niagara", Country.CANADA ) );
-            locations.add( new BorderLocation( "Peace Bridge", "Buffalo", Country.CANADA ) );
-            locations.add( new BorderLocation( "Queenston-Lewiston Bridge", "", Country.CANADA ) );
-            locations.add( new BorderLocation( "Ambassador Bridge", "Detroit/Windsor", Country.USA, "380001" ) );
-            locations.add( new BorderLocation( "Windsor Tunnel", "Detroit/Windsor", Country.USA, "380002" ) );
-            locations.add( new BorderLocation( "Rainbow Bridge", "Niagara", Country.USA, "090102" ) );
-            locations.add( new BorderLocation( "Peace Bridge", "Buffalo", Country.USA, "090101" ) );
-            locations.add( new BorderLocation( "Queenston-Lewiston Bridge", "", Country.USA, "090104" ) );
-
-            for ( BorderLocation borderLocation: locations ) {
-                getBorderLocationDao().createOrUpdate( borderLocation );
-            }
+            createOrUpdateCountries();
+            createOrUpdateBorderLocations( getInitialBorderLocations() );
         } catch ( Exception e) {
         }
+    }
+
+    private void createDatabaseTables() throws SQLException {
+        TableUtils.createTable( connectionSource, BorderLocation.class );
+        TableUtils.createTable( connectionSource, Country.class );
+    }
+
+    private void createOrUpdateCountries() throws SQLException {
+        Country canada = Country.CANADA;
+        Country usa = Country.USA;
+
+        getCountryDao().createOrUpdate( canada );
+        getCountryDao().createOrUpdate( usa );
+    }
+
+    private void createOrUpdateBorderLocations( List<BorderLocation> borderLocations ) throws SQLException {
+        for ( BorderLocation borderLocation: borderLocations ) {
+            getBorderLocationDao().createOrUpdate( borderLocation );
+        }
+    }
+
+    private List<BorderLocation> getInitialBorderLocations() {
+        List<BorderLocation> locations = new ArrayList<BorderLocation>();
+
+        locations.add( new BorderLocation( "Ambassador Bridge", "Windsor/Detroit", Country.CANADA ) );
+        locations.add( new BorderLocation( "Detroit and Canada Tunnel", "Windsor/Detroit", Country.CANADA ) );
+        locations.add( new BorderLocation( "Rainbow Bridge", "Niagara", Country.CANADA ) );
+        locations.add( new BorderLocation( "Peace Bridge", "Buffalo", Country.CANADA ) );
+        locations.add( new BorderLocation( "Queenston-Lewiston Bridge", "", Country.CANADA ) );
+        locations.add( new BorderLocation( "Ambassador Bridge", "Detroit/Windsor", Country.USA, "380001" ) );
+        locations.add( new BorderLocation( "Windsor Tunnel", "Detroit/Windsor", Country.USA, "380002" ) );
+        locations.add( new BorderLocation( "Rainbow Bridge", "Niagara", Country.USA, "090102" ) );
+        locations.add( new BorderLocation( "Peace Bridge", "Buffalo", Country.USA, "090101" ) );
+        locations.add( new BorderLocation( "Queenston-Lewiston Bridge", "", Country.USA, "090104" ) );
+
+        return locations;
     }
 
     @Override
