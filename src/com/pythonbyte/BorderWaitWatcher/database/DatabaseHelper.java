@@ -7,6 +7,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.pythonbyte.BorderWaitWatcher.BorderWaitWatcherConfiguration;
 import com.pythonbyte.BorderWaitWatcher.domain.Country;
 import com.pythonbyte.BorderWaitWatcher.domain.BorderLocation;
 import com.pythonbyte.BorderWaitWatcher.helpers.ExceptionHelpers;
@@ -16,15 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
-    final static int DB_VERSION = 1;
-    final static String DB_NAME = "borderwaitwatcher.sqlite";
     Context context;
-
     private Dao<BorderLocation, Integer> borderLocationDao = null;
     private Dao<Country, Integer> countryDao = null;
 
     public DatabaseHelper( Context context ) {
-        super( context, DB_NAME, null, DB_VERSION );
+        super( context, BorderWaitWatcherConfiguration.DB_NAME, null, BorderWaitWatcherConfiguration.DB_VERSION );
         this.context = context;
     }
 
@@ -33,7 +31,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             createDatabaseTables();
         } catch ( SQLException e ) {
-            Log.e(DatabaseHelper.class.getName(), "Can't create the database", e);
+            Log.e( DatabaseHelper.class.getName(), "Can't create the database", e );
             throw new RuntimeException( e );
         }
 

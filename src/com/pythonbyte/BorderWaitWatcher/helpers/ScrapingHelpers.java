@@ -1,5 +1,6 @@
 package com.pythonbyte.BorderWaitWatcher.helpers;
 
+import com.pythonbyte.BorderWaitWatcher.BorderWaitWatcherConfiguration;
 import com.pythonbyte.BorderWaitWatcher.domain.BorderLocation;
 import org.horrabin.horrorss.RssFeed;
 import org.horrabin.horrorss.RssItemBean;
@@ -12,10 +13,6 @@ import org.jsoup.select.Elements;
 import java.util.List;
 
 public class ScrapingHelpers {
-    private static String CANADIAN_GOVERNMENT_BORDER_URL = "http://www.cbsa-asfc.gc.ca/bwt-taf/menu-eng.html";
-    private static String US_GOVERNMENT_BORDER_URL_PREFIX = "http://apps.cbp.gov/bwt/customize_rss.asp?portList=";
-    private static String US_GOVERNMENT_BORDER_URL_SUFFIX = "&lane=pov&action=rss&f=csv";
-
     public static List<BorderLocation> loadWaitTimesIntoBorderLocationsFromCanadianGovernmentUrl(List<BorderLocation> borderLocations) {
         try {
             Elements borderWaitTimeTableRows = getBorderWaitTimeRows();
@@ -29,7 +26,7 @@ public class ScrapingHelpers {
     }
 
     private static Elements getBorderWaitTimeRows() throws Exception {
-        Document borderWaitTimePageDocument = Jsoup.connect( CANADIAN_GOVERNMENT_BORDER_URL ).get();
+        Document borderWaitTimePageDocument = Jsoup.connect( BorderWaitWatcherConfiguration.CANADIAN_GOVERNMENT_BORDER_URL ).get();
         Element borderWaitTimeTable = borderWaitTimePageDocument.select( "table[class=bwt]" ).first();
         return borderWaitTimeTable.select( "tr" );
     }
@@ -54,7 +51,7 @@ public class ScrapingHelpers {
 
     public static List<BorderLocation> loadWaitTimesIntoBorderLocationsFromUnitedStatesGovernmentUrl( List<BorderLocation> borderLocations ) {
         for ( BorderLocation borderLocation: borderLocations ) {
-            String feedUrl = US_GOVERNMENT_BORDER_URL_PREFIX + borderLocation.getPortId() + US_GOVERNMENT_BORDER_URL_SUFFIX;
+            String feedUrl = BorderWaitWatcherConfiguration.US_GOVERNMENT_BORDER_URL_PREFIX + borderLocation.getPortId() + BorderWaitWatcherConfiguration.US_GOVERNMENT_BORDER_URL_SUFFIX;
             String description = "Unknown";
 
             RssParser rss = new RssParser();
