@@ -9,7 +9,7 @@ I built this app to give me instant border wait times for particular crossings i
 were of interest to me. It would be fairly trivial to extend this app to cover the crossings you are interested in,
 or better yet allow the user to configure which crossings get displayed.
 
--- Mark Nenadov, 2013 - www.marknenadov.com and www.pythonbyte.com
+-- Mark Nenadov, 2013-2015 - www.marknenadov.com
 
 --
 
