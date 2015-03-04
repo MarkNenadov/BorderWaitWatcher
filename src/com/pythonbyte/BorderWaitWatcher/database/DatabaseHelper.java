@@ -65,7 +65,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         List<BorderLocation> locations = new ArrayList<BorderLocation>();
 
         locations.add( new BorderLocation( "Ambassador Bridge", "Windsor/Detroit", Country.CANADA ) );
-        locations.add( new BorderLocation( "Detroit and Canada Tunnel", "Windsor/Detroit", Country.CANADA ) );
+        locations.add( new BorderLocation( "Windsor and Detroit Tunnel", "Windsor/Detroit", Country.CANADA ) );
         locations.add( new BorderLocation( "Rainbow Bridge", "Niagara", Country.CANADA ) );
         locations.add( new BorderLocation( "Peace Bridge", "Buffalo", Country.CANADA ) );
         locations.add( new BorderLocation( "Queenston-Lewiston Bridge", "", Country.CANADA ) );

@@ -1,5 +1,6 @@
 package com.pythonbyte.BorderWaitWatcher.helpers;
 
+import android.util.Log;
 import com.pythonbyte.BorderWaitWatcher.BorderWaitWatcherConfiguration;
 import com.pythonbyte.BorderWaitWatcher.domain.BorderLocation;
 import org.horrabin.horrorss.RssFeed;
@@ -42,7 +43,7 @@ public class ScrapingHelpers {
             if ( rowElement.select( "td[headers=Office]" ).first() != null ) {
                 Element officeTdBold = rowElement.select( "td[headers=Office]" ).first().select( "b" ).first();
 
-                if ( officeTdBold.text().equals( borderLocation.getTitle() ) ) {
+                if ( borderLocation.getTitle() != null && officeTdBold.text().trim().equals( borderLocation.getTitle().trim() ) ) {
                     borderLocation.setWaitTime( rowElement.select( "td[headers=Trav TravCanada]" ).first().text() );
                 }
             }
